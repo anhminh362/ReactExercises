@@ -1,23 +1,19 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useReducer } from "react";
 
 const TasksContext = createContext(null);
 
 const TasksDispatchContext = createContext(null);
 
 export function TasksProvider({ children }) {
-  const [tasks, dispatch] = useReducer(
-    tasksReducer,
-    initialTasks
-  );
+  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
 
   return (
     <>
-    
-    <TasksContext.Provider value={tasks}>
-      <TasksDispatchContext.Provider value={dispatch}>
-        {children}
-      </TasksDispatchContext.Provider>
-    </TasksContext.Provider>
+      <TasksContext.Provider value={tasks}>
+        <TasksDispatchContext.Provider value={dispatch}>
+          {children}
+        </TasksDispatchContext.Provider>
+      </TasksContext.Provider>
     </>
   );
 }
@@ -32,15 +28,18 @@ export function useTasksDispatch() {
 
 export default function tasksReducer(tasks, action) {
   switch (action.type) {
-    case 'added': {
-      return [...tasks, {
-        id: action.id,
-        text: action.text,
-        done: false
-      }];
+    case "added": {
+      return [
+        ...tasks,
+        {
+          id: action.id,
+          text: action.text,
+          done: false,
+        },
+      ];
     }
-    case 'changed': {
-      return tasks.map(t => {
+    case "changed": {
+      return tasks.map((t) => {
         if (t.id === action.task.id) {
           return action.task;
         } else {
@@ -48,17 +47,17 @@ export default function tasksReducer(tasks, action) {
         }
       });
     }
-    case 'deleted': {
-      return tasks.filter(t => t.id !== action.id);
+    case "deleted": {
+      return tasks.filter((t) => t.id !== action.id);
     }
     default: {
-      throw Error('Unknown action: ' + action.type);
+      throw Error("Unknown action: " + action.type);
     }
   }
 }
 
- const initialTasks = [
-  { id: 0, text: 'Get up', done: true },
-  { id: 1, text: 'Write report', done: false },
-  { id: 2, text: 'Drink matcha', done: false }
+const initialTasks = [
+  { id: 0, text: "Get up", done: true },
+  { id: 1, text: "Write report", done: false },
+  { id: 2, text: "Drink matcha", done: false },
 ];

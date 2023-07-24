@@ -1,20 +1,24 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { decrement, increment } from './calculatorReducer';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { decrement, increment } from "./calculatorReducer";
 
 const Calculator = () => {
   const dispatch = useDispatch();
 
   return (
     <div>
-      <button onClick={() => dispatch(increment(Math.floor(Math.random() * 5) + 1))}>
+      <button
+        onClick={() => dispatch(increment(1))}
+      >
         Increment
       </button>
-      <button onClick={() => dispatch(decrement(Math.floor(Math.random() * 5) + 1))}>
+      <button
+        onClick={() => dispatch(decrement(1))}
+      >
         Decrement
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Calculator
+export default Calculator;
