@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 
@@ -7,25 +7,30 @@ function Search() {
   const [searchInfo, setSearchInfo] = useState("");
   const [todoList, setTodoList] = useState([]);
   console.log(searchInfo);
-  const handleChange = (e) => {
-    const inputValue = e.target.value;
+   const handleChange = async (e) => {
+  
+    const inputValue = await e.target.value;
     setSearchInfo(inputValue);
-    console.log(1);
+    // console.log(1);
+    // callbackFuction();
   };
 
   const callbackFuction = useCallback(() => {
+    console.log('searchinfo',searchInfo);
     const filter = todos.filter((todo) =>
       todo.text.toLowerCase().startsWith(searchInfo.toLowerCase())
     );
-    if (filter !== []) {
-      // setTodoList(filter);
+    if (filter!==[]) {
+      setTodoList(filter);
       console.log(11, filter);
     } else {
       setTodoList([]);
       console.log(22);
     }
-  }, [todos]);
-  callbackFuction();
+  }, [searchInfo]);
+  useEffect(()=>{
+    callbackFuction();
+  },[callbackFuction])
   return (
     <div>
       <input
@@ -38,11 +43,14 @@ function Search() {
         required
       />
       {/* Hiển thị danh sách todo */}
-      {todoList.map((todo) => (
-        <div className="todo" key={todo.id}>
-          {todo.text}
+      {searchInfo && todoList.map((todo) => {
+        return (
+            <div className="todo" key={todo.id}>
+          <p>{todo.text}</p>
         </div>
-      ))}
+        )
+        
+      })}
     </div>
   );
 }
